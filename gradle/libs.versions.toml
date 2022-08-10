@@ -1,0 +1,63 @@
+[versions]
+kotlin = "1.7.0"
+compose = "1.2.0"
+navigation = "2.5.1"
+coroutines = "1.6.4"
+hiltComposeNavigation = "1.0.0"
+accompanist = "0.25.0"
+coil = "2.1.0"
+lifecycle = "2.5.1"
+hilt = "2.42"
+test = "1.4.0"
+
+[libraries]
+
+agp = { module = "com.android.tools.build:gradle", version = "7.2.2" }
+kgp = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+hiltgp = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+
+kotlinStdLib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+
+coroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutinesAndroid = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+coreKtx = { module = "androidx.core:core-ktx", version = "1.7.0" }
+lifecycleRuntimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version = "lifecycle" }
+activityKtx = { module = "androidx.activity:activity-ktx", version = "1.5.1" }
+
+composeActivity = { module = "androidx.activity:activity-compose", version = "1.5.1" }
+composeUi = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+composeMaterial = { module = "androidx.compose.material:material", version.ref = "compose" }
+composeTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+composeNav = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+composeMaterialIcons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltComposeNavigation" }
+composeCoil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+arrowKt = { module = "io.arrow-kt:arrow-core", version = "1.0.1" }
+
+accompanistInsets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
+accompanistInsetsUi = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
+accompanistInsetsSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanistSwipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
+accompanistCompose = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+
+hiltkapt = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+
+mockk = { module = "io.mockk:mockk", version = "1.12.4" }
+testArchCore = { module = "androidx.arch.core:core-testing", version = "2.1.0" }
+testCore = { module = "androidx.test:core", version.ref = "test" }
+testRules = { module = "androidx.test:rules", version.ref = "test" }
+testRunner = { module = "androidx.test:runner", version.ref = "test" }
+
+[bundles]
+fizzbuzz = ["kotlinStdLib", "coreKtx", "activityKtx", "lifecycleRuntimeKtx",
+    "arrowKt", "hilt",
+    "composeUi", "composeMaterial", "composeMaterialIcons", "composeTooling", "composeNav", "composeHilt",
+    "coroutinesCore", "coroutinesAndroid", "composeCoil", "coroutinesTest",
+    "accompanistInsets", "accompanistInsetsUi", "accompanistInsetsSystemUi", "accompanistSwipeRefresh", "accompanistCompose",
+    "testRules", "testRunner", "testCore", "testArchCore", "mockk"]
+
