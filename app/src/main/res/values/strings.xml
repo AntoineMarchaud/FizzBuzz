@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FizzBuzz</string>
+    <string name="default_error_message">Invalid input</string>
+    <string name="next_screen">Next screen</string>
+
+
+    <string name="field_required">Field required</string>
+    <string name="number_too_big">Number too big</string>
+    <string name="not_number">Not a number</string>
+</resources>
