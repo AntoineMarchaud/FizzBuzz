@@ -44,13 +44,13 @@ fun FieldsComposable(
         onButtonClicked = {
             viewModel.checkForms()
             if (viewState.isEverythingOk) {
-                with(viewModel.getValues()) {
+                with(viewState.inputs) {
                     onNextScreen(
-                        this.first,
-                        this.second,
-                        this.third,
-                        this.fourth,
-                        this.fifth
+                        this.integer1.value.toInt(),
+                        this.integer2.value.toInt(),
+                        this.text1.value,
+                        this.text2.value,
+                        this.limit.value.toInt()
                     )
                 }
             }

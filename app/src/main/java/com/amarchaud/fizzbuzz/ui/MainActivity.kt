@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.amarchaud.fizzbuzz.ui.graph.enterTransition
 import com.amarchaud.fizzbuzz.ui.graph.exitTransition
@@ -17,9 +20,6 @@ import com.amarchaud.fizzbuzz.ui.graph.popExitTransition
 import com.amarchaud.fizzbuzz.ui.screen.fields.FieldsComposable
 import com.amarchaud.fizzbuzz.ui.screen.result.ResultComposable
 import com.amarchaud.fizzbuzz.ui.theme.FizzBuzzTheme
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,12 +43,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // draw behind nav / status bar
+        // use new system edgetoedge
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             FizzBuzzTheme {
-                val navController = rememberAnimatedNavController()
-                AnimatedNavHost(
+                val navController = rememberNavController()
+                NavHost(
                     navController = navController,
                     startDestination = RouteComposable.fieldsScreen,
                     enterTransition = { enterTransition },

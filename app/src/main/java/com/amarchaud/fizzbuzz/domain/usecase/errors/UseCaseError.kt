@@ -2,16 +2,16 @@ package com.amarchaud.fizzbuzz.domain.usecase.errors
 
 import com.amarchaud.fizzbuzz.data.models.ErrorData
 
-sealed class UseCaseError {
-    object GenericUseCaseError : UseCaseError()
-    object NegativeNumberUseCaseError : UseCaseError()
-    object GreaterThanLimitUseCaseError : UseCaseError()
+sealed class UseCaseError : Throwable() {
+    class  GenericUseCaseError : UseCaseError()
+    class NegativeNumberUseCaseError : UseCaseError()
+    class GreaterThanLimitUseCaseError : UseCaseError()
+}
 
-    companion object {
-        internal fun handleError(error: ErrorData) = when (error) {
-            is ErrorData.GreaterThanLimit -> GreaterThanLimitUseCaseError
-            is ErrorData.NegativeNumber -> NegativeNumberUseCaseError
-            else -> GenericUseCaseError
-        }
+fun ErrorData.toDomain() : UseCaseError {
+    return  when (this) {
+        is ErrorData.GreaterThanLimit -> UseCaseError.GreaterThanLimitUseCaseError()
+        is ErrorData.NegativeNumber -> UseCaseError.NegativeNumberUseCaseError()
+        else -> UseCaseError.GenericUseCaseError()
     }
 }

@@ -1,17 +1,23 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+    //android
+    alias libs.plugins.com.android.application
+    //jetbrains
+    alias libs.plugins.org.jetbrains.kotlin.android
+    // alias libs.plugins.org.jetbrains.kotlin.plugin.parcelize
+    //Hilt
+    alias libs.plugins.com.google.devtools.ksp
+    alias libs.plugins.com.google.dagger.hilt.android
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
+
+    namespace 'com.amarchaud.fizzbuzz'
 
     defaultConfig {
         applicationId "com.amarchaud.fizzbuzz"
-        minSdk 23
-        targetSdk 32
+        minSdk 29
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -31,7 +37,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
 
-        kotlin.sourceSets.all {
+        kotlin.sourceSets.configureEach {
             languageSettings.optIn("kotlin.RequiresOptIn")
         }
     }
@@ -42,7 +48,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.get()
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     packagingOptions {
         resources {
@@ -55,6 +61,22 @@ android {
 }
 
 dependencies {
-    implementation libs.bundles.fizzbuzz
-    kapt libs.hiltkapt
+    //Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.bundles.hilt.androidx)
+    ksp(libs.hilt.android.compiler)
+
+    // Compose
+    implementation platform(libs.compose.bom)
+    implementation libs.bundles.compose
+    implementation libs.bundles.accompanist
+    implementation libs.lottie.compose
+
+    // Navigation
+    implementation libs.bundles.navigation
+
+    // Ktx
+    implementation libs.activity.ktx
+    implementation libs.core.ktx
+    implementation libs.fragment.ktx
 }

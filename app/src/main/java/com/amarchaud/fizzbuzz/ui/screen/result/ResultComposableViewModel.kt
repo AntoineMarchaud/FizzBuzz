@@ -35,7 +35,6 @@ class ResultComposableViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.Eagerly, ResultUiModel())
 
-
     init {
         viewModelScope.launch {
             with(savedStateHandle) {
@@ -45,13 +44,11 @@ class ResultComposableViewModel @Inject constructor(
                     text1 = get<String>(MainActivity.ResultExtra.text1).orEmpty(),
                     text2 = get<String>(MainActivity.ResultExtra.text2).orEmpty(),
                     limit = get<Int>(MainActivity.ResultExtra.limit) ?: 0,
-                ).fold(
-                    {
-                        _res.value = it
-                    }, {
-                        _error.value = it
-                    }
-                )
+                ).onSuccess {
+                    _res.value = it
+                }.onFailure {
+                    _error.value = it as UseCaseError
+                }
             }
 
         }

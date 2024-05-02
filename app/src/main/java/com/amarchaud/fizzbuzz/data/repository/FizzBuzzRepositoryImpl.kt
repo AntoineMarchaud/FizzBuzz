@@ -1,9 +1,9 @@
 package com.amarchaud.fizzbuzz.data.repository
 
-import arrow.core.Either
 import com.amarchaud.fizzbuzz.data.models.ErrorData
 import com.amarchaud.fizzbuzz.di.DispatcherModule
 import com.amarchaud.fizzbuzz.domain.repository.FizzBuzzRepository
+import com.amarchaud.fizzbuzz.domain.usecase.errors.toDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -23,11 +23,11 @@ class FizzBuzzRepositoryImpl @Inject constructor(
         text1: String,
         text2: String,
         limit: Int
-    ): Either<List<String>, ErrorData> = withContext(ioDispatcher) {
+    ): Result<List<String>> = withContext(ioDispatcher) {
         if (int1 < 0 || int2 < 0) {
-            Either.Right(ErrorData.NegativeNumber)
+            Result.failure(ErrorData.NegativeNumber.toDomain())// normally
         } else if (int1 > limit || int2 > limit) {
-            Either.Right(ErrorData.GreaterThanLimit)
+            Result.failure(ErrorData.GreaterThanLimit.toDomain())
         } else {
             val mul = int1 * int2
             val l = mutableListOf<String>()
@@ -44,7 +44,7 @@ class FizzBuzzRepositoryImpl @Inject constructor(
                 )
             }
 
-            Either.Left(l)
+            Result.success(l)
         }
     }
 }

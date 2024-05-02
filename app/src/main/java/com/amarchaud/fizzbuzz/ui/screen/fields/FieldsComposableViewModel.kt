@@ -3,8 +3,6 @@ package com.amarchaud.fizzbuzz.ui.screen.fields
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import arrow.core.Tuple4
-import arrow.core.Tuple5
 import com.amarchaud.fizzbuzz.R
 import com.amarchaud.fizzbuzz.ui.screen.fields.models.FieldsUiModel
 import com.amarchaud.fizzbuzz.ui.screen.fields.models.isValid
@@ -165,18 +163,6 @@ class FieldsComposableViewModel @Inject constructor(
     fun checkForms() {
         if (viewState.value.isEverythingOk.not()) {
             _showErrors.value = true
-        }
-    }
-
-    fun getValues(): Tuple5<Int, Int, String, String, Int> {
-        with(viewState.value) {
-            return Tuple5(
-                this.inputs.integer1.value.toInt(),
-                this.inputs.integer2.value.toInt(),
-                this.inputs.text1.value,
-                this.inputs.text2.value,
-                this.inputs.limit.value.toInt()
-            )
         }
     }
 }

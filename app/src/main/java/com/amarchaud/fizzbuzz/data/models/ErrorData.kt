@@ -1,6 +1,6 @@
 package com.amarchaud.fizzbuzz.data.models
 
-sealed class ErrorData {
-    object NegativeNumber : ErrorData()
-    object GreaterThanLimit : ErrorData()
+sealed class ErrorData  {
+    data object NegativeNumber : ErrorData()
+    data object GreaterThanLimit : ErrorData()
 }
