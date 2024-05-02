@@ -3,6 +3,7 @@ package com.amarchaud.fizzbuzz.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -38,13 +39,9 @@ class MainActivity : ComponentActivity() {
         const val limit = "limit"
     }
 
-    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-
-        // draw behind nav / status bar
-        // use new system edgetoedge
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             FizzBuzzTheme {
