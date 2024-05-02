@@ -5,7 +5,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.amarchaud.fizzbuzz.ui.screen.fields.FieldsComposableViewModel
 import com.amarchaud.fizzbuzz.ui.screen.fields.models.FieldsUiModel
 import com.amarchaud.fizzbuzz.utils.GenericErrorState
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -13,22 +12,25 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.*
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
+import org.mockito.Mockito.mock
 
 class FieldsViewModelTest {
 
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
-
     private lateinit var viewModel: FieldsComposableViewModel
-    private lateinit var applicationMock: Application
+    private val applicationMock: Application = mock()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
-        applicationMock = mockk()
         Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 

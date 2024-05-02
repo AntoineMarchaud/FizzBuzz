@@ -23,7 +23,7 @@ accompanist = "0.34.0"
 compose_paging = "3.2.1"
 
 # Coroutines
-kotlinx_coroutines_android = "1.7.3"
+coroutines_version = "1.7.3"
 lifecycle_version = "2.7.0"
 
 # Navigation
@@ -33,10 +33,6 @@ navigation_version = "2.7.7"
 lottie_version = "6.4.0"
 coil = "2.6.0"
 
-# test
-test = "1.5.2"
-
-
 [bundles]
 
 compose = ["compose_viewbinding", "compose_material", "compose_animation", "compose_tooling", "compose_livedata",
@@ -44,6 +40,7 @@ compose = ["compose_viewbinding", "compose_material", "compose_animation", "comp
 accompanist = ["accompanist_theme", "accompanist_uicontroller", "accompanist_permissions", "accompanist-drawablepainter"]
 navigation = ["navigation_compose", "navigation_fragment_ktx", "navigation_ui_ktx"]
 hilt_androidx = ["hilt_androidx_navigation_compose", "hilt_androidx_navigation_fragment", "hilt_androidx_navigation", "hilt_androidx_common"]
+test = ["junit", "testArchCore", "kotlinx_coroutines_test", "mockito_kotlin", "mockito_inline"]
 
 [plugins]
 
@@ -62,7 +59,6 @@ com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-p
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt_androidx_common = { module = "androidx.hilt:hilt-common", version.ref = "hiltAndroidX" }
-hilt_androidx_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltAndroidX" }
 hilt_androidx_navigation = { module = "androidx.hilt:hilt-navigation", version.ref = "hiltAndroidX" }
 hilt_androidx_navigation_fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltAndroidX" }
 hilt_androidx_navigation_compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltAndroidX" }
@@ -92,9 +88,8 @@ accompanist_uicontroller = { module = "com.google.accompanist:accompanist-system
 accompanist_permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanist" }
 
-mockk = { module = "io.mockk:mockk", version = "1.12.4" }
-testArchCore = { module = "androidx.arch.core:core-testing", version = "2.1.0" }
-testCore = { module = "androidx.test:core", version.ref = "test" }
-testRules = { module = "androidx.test:rules", version.ref = "test" }
-testRunner = { module = "androidx.test:runner", version.ref = "test" }
-
+junit = { module = "junit:junit", version = "4.13.2" }
+mockito_kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.0.0" }
+mockito_inline = { group = "org.mockito", name = "mockito-inline", version = "5.2.0" }
+testArchCore = { module = "androidx.arch.core:core-testing", version = "2.2.0" }
+kotlinx_coroutines_test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines_version" }

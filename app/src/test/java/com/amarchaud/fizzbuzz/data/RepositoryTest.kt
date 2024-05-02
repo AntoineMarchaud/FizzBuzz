@@ -1,14 +1,11 @@
 package com.amarchaud.fizzbuzz.data
 
-import arrow.core.left
-import arrow.core.right
 import com.amarchaud.fizzbuzz.data.models.ErrorData
 import com.amarchaud.fizzbuzz.data.repository.FizzBuzzRepositoryImpl
 import com.amarchaud.fizzbuzz.domain.repository.FizzBuzzRepository
-import io.mockk.every
+import com.amarchaud.fizzbuzz.domain.usecase.errors.toDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -50,23 +47,23 @@ class RepositoryTest {
         repository = FizzBuzzRepositoryImpl(ioDispatcher)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun AllOk() = runTest {
+    fun allOk() = runTest {
         val res = repository.computeFizzBuzz(
             3, 5, text1Mock, text2Mock, 20
         )
 
-        Assert.assertTrue(res == listResultMock.left() )
+        Assert.assertTrue(res.isSuccess)
+        Assert.assertTrue(res == Result.success(listResultMock))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun Error() = runTest {
+    fun error() = runTest {
         val res = repository.computeFizzBuzz(
             30, 5, text1Mock, text2Mock, 20
         )
 
-        Assert.assertTrue(res == ErrorData.GreaterThanLimit.right() )
+        Assert.assertTrue(res.isFailure)
+        Assert.assertEquals(res.exceptionOrNull()?.javaClass, ErrorData.GreaterThanLimit.toDomain().javaClass)
     }
 }

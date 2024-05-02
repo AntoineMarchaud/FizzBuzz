@@ -34,15 +34,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17.toString()
+        targetCompatibility JavaVersion.VERSION_17.toString()
 
         kotlin.sourceSets.configureEach {
             languageSettings.optIn("kotlin.RequiresOptIn")
         }
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
         compose true
@@ -79,4 +79,7 @@ dependencies {
     implementation libs.activity.ktx
     implementation libs.core.ktx
     implementation libs.fragment.ktx
+
+    // test
+    implementation libs.bundles.test
 }

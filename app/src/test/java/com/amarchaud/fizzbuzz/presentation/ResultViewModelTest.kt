@@ -3,16 +3,11 @@ package com.amarchaud.fizztext2Mock.presentation
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import arrow.core.left
-import arrow.core.right
 import com.amarchaud.fizzbuzz.domain.usecase.GetFizzBuzzUseCase
 import com.amarchaud.fizzbuzz.domain.usecase.errors.UseCaseError
 import com.amarchaud.fizzbuzz.ui.MainActivity
 import com.amarchaud.fizzbuzz.ui.screen.result.ResultComposableViewModel
 import com.amarchaud.fizzbuzz.ui.screen.result.models.ResultUiModel
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -22,6 +17,9 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.rules.TestRule
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
 
 class ResultViewModelTest {
 
@@ -54,16 +52,13 @@ class ResultViewModelTest {
     )
 
     private lateinit var viewModel: ResultComposableViewModel
-    private lateinit var applicationMock: Application
-    private lateinit var useCaseMock: GetFizzBuzzUseCase
-    private lateinit var savedStateHandleMock: SavedStateHandle
+    private val applicationMock: Application = mock()
+    private val useCaseMock: GetFizzBuzzUseCase = mock()
+    private val savedStateHandleMock: SavedStateHandle = mock()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
-        applicationMock = mockk()
-        useCaseMock = mockk()
-        savedStateHandleMock = mockk()
         Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
@@ -74,35 +69,20 @@ class ResultViewModelTest {
     }
 
     private fun mockEnteredValues() {
-        every {
-            savedStateHandleMock.get<Int>(MainActivity.ResultExtra.integer1)
-        } answers {
-            2
-        }
+        whenever(savedStateHandleMock.get<Int>(MainActivity.ResultExtra.integer1))
+            .thenReturn(2)
 
-        every {
-            savedStateHandleMock.get<Int>(MainActivity.ResultExtra.integer2)
-        } answers {
-            6
-        }
+        whenever(savedStateHandleMock.get<Int>(MainActivity.ResultExtra.integer2))
+            .thenReturn(6)
 
-        every {
-            savedStateHandleMock.get<String>(MainActivity.ResultExtra.text1)
-        } answers {
-            text1Mock
-        }
+        whenever(savedStateHandleMock.get<String>(MainActivity.ResultExtra.text1))
+            .thenReturn(text1Mock)
 
-        every {
-            savedStateHandleMock.get<String>(MainActivity.ResultExtra.text2)
-        } answers {
-            text2Mock
-        }
+        whenever(savedStateHandleMock.get<String>(MainActivity.ResultExtra.text2))
+            .thenReturn(text2Mock)
 
-        every {
-            savedStateHandleMock.get<Int>(MainActivity.ResultExtra.limit)
-        } answers {
-            20
-        }
+        whenever(savedStateHandleMock.get<Int>(MainActivity.ResultExtra.limit))
+            .thenReturn(20)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -111,11 +91,8 @@ class ResultViewModelTest {
 
         mockEnteredValues()
 
-        coEvery {
-            useCaseMock.run(any(), any(), any(), any(), any())
-        } answers {
-            listResultMock.left()
-        }
+        whenever(useCaseMock.run(any(), any(), any(), any(), any()))
+            .thenReturn(Result.success(listResultMock))
 
         viewModel = ResultComposableViewModel(
             app = applicationMock,
@@ -142,17 +119,12 @@ class ResultViewModelTest {
     fun numberTooBig() = runTest {
 
         mockEnteredValues()
-        every {
-            savedStateHandleMock.get<Int>(MainActivity.ResultExtra.integer1)
-        } answers {
-            200
-        }
 
-        coEvery {
-            useCaseMock.run(any(), any(), any(), any(), any())
-        } answers {
-            UseCaseError.GreaterThanLimitUseCaseError.right()
-        }
+        whenever(savedStateHandleMock.get<Int>(MainActivity.ResultExtra.integer1))
+            .thenReturn(200)
+
+        whenever(useCaseMock.run(any(), any(), any(), any(), any()))
+            .thenReturn(Result.failure(UseCaseError.GreaterThanLimitUseCaseError()))
 
         viewModel = ResultComposableViewModel(
             app = applicationMock,
@@ -168,7 +140,7 @@ class ResultViewModelTest {
         }
 
         values.last().let {
-            Assert.assertTrue(it.error == UseCaseError.GreaterThanLimitUseCaseError)
+            Assert.assertEquals(it.error?.javaClass, UseCaseError.GreaterThanLimitUseCaseError().javaClass)
         }
 
         job.cancel()
